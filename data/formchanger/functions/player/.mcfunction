@@ -1,7 +1,6 @@
 # CFIX: 以下の処理はadvancementsで呼び出したほうが formchanger:player/ の常時実行コマンドを削減できるため
 #       formchanger:player/initialize L2にfunctionの中身ごと移動
 # ID割り振り
-    # execute as @e[type=player] unless score @s Play_ID matches 0.. run function formchanger:player/give_id
     #execute as @e[type=!player] unless score @s Mob_ID matches 0.. run function formchanger:player/give_id
 
 # ツールの使用時処理
