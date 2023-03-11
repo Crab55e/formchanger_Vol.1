@@ -1,11 +1,15 @@
-
+# CFIX: 以下の処理はadvancementsで呼び出したほうが formchanger:player/ の常時実行コマンドを削減できるため
+#       formchanger:player/initialize L2にfunctionの中身ごと移動
 # ID割り振り
-    execute as @e[type=player] unless score @s Play_ID matches 0.. run function formchanger:player/give_id
+    # execute as @e[type=player] unless score @s Play_ID matches 0.. run function formchanger:player/give_id
     #execute as @e[type=!player] unless score @s Mob_ID matches 0.. run function formchanger:player/give_id
 
 # ツールの使用時処理
     # 異物混入でリセット
-        execute as @s[tag=Re_set,nbt=!{Inventory:[{Slot:-106b,id:"minecraft:warped_fungus_on_a_stick"}]},nbt={SelectedItem:{tag:{HideFlags:7}}},predicate=!formchanger:battery_on_mainhand] run function formchanger:use/change/reset
+        execute as @s[tag=Re_set,nbt=!{Inventory: [{Slot: -106b, id: "minecraft:warped_fungus_on_a_stick"}]},nbt={SelectedItem: {tag: {HideFlags: 7}}},predicate=!formchanger:battery_on_mainhand] run function formchanger:use/change/reset
+
+    # グレードアップツール
+        execute if predicate formchanger:goods/gradeup_kit_on_mainhand run function formchanger:player/notice
 
     # エレクトツール関連
         execute if predicate formchanger:electtool_on_mainhand run function formchanger:use/items/electtool
@@ -68,7 +72,7 @@ execute unless predicate formchanger:sneak run scoreboard players reset @s Nia_S
             execute if predicate formchanger:shulkers_replica/airarts_on_mainhand run scoreboard players operation @s Nia_Sneaktotaltime += $Constant.value.20 Constant
 
 # バッテリー進化
-    execute if data entity @s SelectedItem.tag.Status{ItemID:Normal_Battery} run function formchanger:use/items/battery_mainhand
+    execute if data entity @s SelectedItem.tag.Status{ItemID: Normal_Battery} run function formchanger:use/items/battery_mainhand
 
 # 条件付きスコアボード加算
     execute if predicate formchanger:lightning run scoreboard players add @s Thunder_count 1
@@ -118,7 +122,7 @@ execute unless predicate formchanger:sneak run scoreboard players reset @s Nia_S
 tag @s remove Kill
 
 # 特殊効果
-    execute at @e[nbt={ActiveEffects:[{Id:24,Amplifier:5b}]}] as @s run function formchanger:use/effect/light_stand
+    execute at @e[nbt={ActiveEffects: [{Id: 24, Amplifier: 5b}]}] as @s run function formchanger:use/effect/light_stand
     execute as @e[scores={DP_Cooldown=0}] run data modify entity @s NoAI set value false
     execute as @e[scores={DP_Cooldown=0}] run scoreboard players reset @s DP_Cooldown
 
